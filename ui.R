@@ -9,6 +9,7 @@
 
 library(shiny)
 library(shinydashboard)
+library(leaflet)
 
 # Define UI for application that draws a histogram
 shinyUI(
@@ -17,7 +18,8 @@ shinyUI(
     dashboardSidebar(
       sidebarMenu(
         menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-        menuItem("Widgets", tabName = "widgets", icon = icon("th"))
+        menuItem("Options", tabName = "option", icon = icon("th")),
+        sliderInput("slider", "Slider input:", 1, 100, 50)
       )
     ),
     dashboardBody(
@@ -25,19 +27,30 @@ shinyUI(
         # First tab content
         tabItem(tabName = "dashboard",
                 fluidRow(
-                  box(plotOutput("plot1", height = 250)),
-                  
                   box(
-                    title = "Controls",
-                    sliderInput("slider", "Number of observations:", 1, 100, 50)
-                    )
+                    width = 5, status = "info", height = 200,
+                    title = "carte capteurs",
+                    leafletOutput("Ma carte") 
+                  ),
+                  box(
+                    width = 5, status = "info", height = 200,
+                    title = "Tableau de données",
+                    tableOutput("Datatable")
                   )
+                )
                 ),
         # Second tab content
-        tabItem(tabName = "widgets",
-                h2("Widgets tab content")
+        tabItem(tabName = "option",
+                h2("Options tab content")
         )
-        )
+        ),
+      tabBox(
+        side = "left", height = "250px", width = "250px",
+        selected = "bails1",
+        tabPanel("bails1", "bails 1 "),
+        tabPanel("bails2", "bails 2"),
+        tabPanel("Predictions", "série temporel forecast et compagnie")
+      )
       )
     )
   )
