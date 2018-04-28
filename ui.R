@@ -19,37 +19,47 @@ dashboardPage(
     )
   ),
   dashboardBody(
+    
     tabItems(
+      
       tabItem(
         tabName = "maps",
         
         fluidRow(
+          
+          #box(title = "Web Page Search", status = "primary",height = "155" 
+           #   ,
+            #  ),
           box(
             title = "Carte des capteurs",
-            width = 7,
+            width = 12,
             height = "100%",
+            solidHeader = T,
             collapsible = TRUE,
+            uiOutput("search_plot"),
             leafletOutput("map")
-          ),
-          
-          column(
-            width = 5,
+          )
+        ),
+        
+        fluidRow(
+
             box(
               title = "Capteur",
-              width = 12,
+              width = 5,
               collapsible = TRUE,
               leafletOutput("mapCapteur", height = "200px")
             ),
             
             box(
               title = "Informations",
-              width = 12,
+              width = 7,
               collapsible = TRUE,
               textOutput("capId"),
               textOutput("capLat"),
               textOutput("capLng")
             ) 
-          )
+            
+          
         )
         
       ),

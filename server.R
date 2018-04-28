@@ -47,6 +47,15 @@ setupMap = function(input, output) {
 
 server <- function(input, output) { 
   
+  # output$search_plot <- renderUI({
+  #  searchInput(inputId = "Id009", 
+  #              placeholder = "Entrer l'adresse",
+  #              btnSearch = icon("search"), 
+  #              btnReset = icon("remove"), 
+  #              value='',
+  #              width = "100%")
+  #})
+  
   setupMap(input, output)
   
 }
