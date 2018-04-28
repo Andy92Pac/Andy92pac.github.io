@@ -60,18 +60,22 @@ dashboardPage(
             ) 
             
           
+        ),
+        
+        fluidRow(
+          tabBox(
+            title = "Analyse",
+            id = "AnalyseTab", height = "250px", width = 12,
+            tabPanel("Statistiques", "First tab content"),
+            tabPanel("Prédictif", "Tab content 2")
+          )
         )
         
-      ),
-      tabItem(
-        tabName = "m_pop",
-        # Map in Dashboard
-        leafletOutput("l_population")
-      ),
-      tabItem(
-        tabName = "charts",
-        h2("Second tab content")
       )
     )
   )
 )
+
+
+
+
