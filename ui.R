@@ -31,6 +31,7 @@ dashboardPage(
            #   ,
             #  ),
           box(
+            background = "black",
             title = "Carte des capteurs",
             width = 12,
             height = "100%",
@@ -44,6 +45,8 @@ dashboardPage(
         fluidRow(
 
             box(
+              background = "black",
+              solidHeader = T,
               title = "Capteur",
               width = 5,
               collapsible = TRUE,
@@ -51,6 +54,8 @@ dashboardPage(
             ),
             
             box(
+              background = "black",
+              solidHeader = T,
               title = "Informations",
               width = 7,
               collapsible = TRUE,
@@ -65,9 +70,21 @@ dashboardPage(
         fluidRow(
           tabBox(
             title = "Analyse",
-            id = "AnalyseTab", height = "250px", width = 12,
-            tabPanel("Statistiques", "First tab content"),
-            tabPanel("Prédictif", "Tab content 2")
+            id = "AnalyseTab", width = 12,
+            tabPanel("Statistiques", 
+                     tabBox(
+                       title = "",
+                       height = "400px",
+                       id = "statBox",
+                       tabPanel("Par an",
+                                plotOutput("statCap")
+                                ),
+                       tabPanel("Par jour",
+                                plotOutput("stat2Cap")
+                       )
+                     )
+                    ),
+            tabPanel("Prédictif", "predCap")
           )
         )
         
