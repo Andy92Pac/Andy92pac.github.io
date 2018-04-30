@@ -88,7 +88,7 @@ dashboardPage(
                        tabPanel("Par mois",
                                 withSpinner(plotOutput("plotByMonth"))
                        ),
-                       tabPanel("Ppar jour",
+                       tabPanel("Par jour",
                                 withSpinner(plotOutput("plotByDay"))
                        )
                      )
