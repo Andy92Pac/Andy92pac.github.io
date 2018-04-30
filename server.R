@@ -44,7 +44,11 @@ setupMap = function(input, output) {
         setView(lng = click$lng, lat = click$lat, zoom = 16)
     })
     
+    req <- GET(paste0("http://maps.googleapis.com/maps/api/geocode/json?latlng=",click$lat,",",click$lng,"&sensor=true"))
+    res = content(req)
+    
     output$capId = renderText(paste("Id du capteur : ", click$id))
+    output$capAdresse = renderText(paste("Adresse du capteur : ", res$results[[2]]$formatted_address))
     output$capLat = renderText(paste("Latitude du capteur : ", click$lat))
     output$capLng = renderText(paste("Longitude du capteur : ", click$lng))
     updatePlotStats(input, output, click$id)
@@ -54,25 +58,46 @@ setupMap = function(input, output) {
 updatePlotStats = function(input, output, id) {
   selectedCap <<- tra$find(query = paste0(' { "id": ', as.numeric(id), '}'))
   
-  p = ggplot(selectedCap, aes(date, tauxNum)) +
-    geom_line() +
-    theme_classic()
+  output$plotFromStart = renderPlot(
+    ggplot(selectedCap, aes(date, tauxNum)) +
+      geom_line() +
+      theme_classic()
+  )
   
+  output$plotByYear = renderPlot(
+    selectedCap %>% 
+      mutate(annee = format(date, "%Y"), 
+             jour = format(date, "%j")) %>%
+      ggplot(aes(jour, tauxNum, col = annee)) +
+      geom_line() +
+      theme_classic()
+  )
   
+  output$plotByMonth = renderPlot(
+    selectedCap %>% 
+      mutate(heure = format(date, "%H"),
+             mois = format(date, "%m")) %>%
+      group_by(heure, mois) %>%
+      summarise(moy = mean(tauxNum, na.rm = TRUE)) %>%
+      ggplot(aes(heure, moy, col = mois, group = mois)) +
+      geom_line() +
+      theme_classic()
+  )
   
-  output$statCap = renderPlot(p)
+  output$plotByDay = renderPlot(
+    selectedCap %>% 
+      mutate(heure = format(date, "%H"),
+             jour = format(date, "%A")) %>%
+      group_by(heure, jour) %>%
+      summarise(moy = mean(tauxNum, na.rm = TRUE)) %>%
+      ggplot(aes(heure, moy, col = jour, group = jour)) +
+      geom_line() +
+      theme_classic()
+  )
+  
 } 
 
 server <- function(input, output) { 
-  
-  # output$search_plot <- renderUI({
-  #  searchInput(inputId = "Id009", 
-  #              placeholder = "Entrer l'adresse",
-  #              btnSearch = icon("search"), 
-  #              btnReset = icon("remove"), 
-  #              value='',
-  #              width = "100%")
-  #})
   
   setupMap(input, output)
   
