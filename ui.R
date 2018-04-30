@@ -70,17 +70,19 @@ dashboardPage(
         fluidRow(
           tabBox(
             title = "Analyse",
+            height = "540px",
             id = "AnalyseTab", width = 12,
             tabPanel("Statistiques", 
                      tabBox(
                        title = "",
                        height = "400px",
+                       width = 12,
                        id = "statBox",
-                       tabPanel("Par an",
-                                plotOutput("statCap")
+                       tabPanel("Depuis le début",
+                                plotOutput("plotFromStart")
                                 ),
-                       tabPanel("Par jour",
-                                plotOutput("stat2Cap")
+                       tabPanel("Par année",
+                                plotOutput("plotByYear")
                        )
                      )
                     ),

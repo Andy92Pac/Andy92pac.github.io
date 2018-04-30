@@ -54,13 +54,21 @@ setupMap = function(input, output) {
 updatePlotStats = function(input, output, id) {
   selectedCap <<- tra$find(query = paste0(' { "id": ', as.numeric(id), '}'))
   
-  p = ggplot(selectedCap, aes(date, tauxNum)) +
-    geom_line() +
-    theme_classic()
+  output$plotFromStart = renderPlot(
+    ggplot(selectedCap, aes(date, tauxNum)) +
+      geom_line() +
+      theme_classic()
+  )
   
+  output$plotByYear = renderPlot(
+    selectedCap %>% 
+      mutate(annee = format(date, "%Y"), 
+             jour = format(date, "%j")) %>%
+      ggplot(aes(jour, tauxNum, col = annee)) +
+      geom_line() +
+      theme_classic()
+  )
   
-  
-  output$statCap = renderPlot(p)
 } 
 
 server <- function(input, output) { 
