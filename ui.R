@@ -38,7 +38,7 @@ dashboardPage(
             solidHeader = T,
             collapsible = TRUE,
             uiOutput("search_plot"),
-            leafletOutput("map")
+            withSpinner(leafletOutput("map"))
           )
         ),
         
@@ -50,7 +50,7 @@ dashboardPage(
               title = "Capteur",
               width = 5,
               collapsible = TRUE,
-              leafletOutput("mapCapteur", height = "200px")
+              withSpinner(leafletOutput("mapCapteur", height = "200px"))
             ),
             
             box(
@@ -60,6 +60,7 @@ dashboardPage(
               width = 7,
               collapsible = TRUE,
               textOutput("capId"),
+              textOutput("capAdresse"),
               textOutput("capLat"),
               textOutput("capLng")
             ) 
@@ -79,10 +80,16 @@ dashboardPage(
                        width = 12,
                        id = "statBox",
                        tabPanel("Depuis le début",
-                                plotOutput("plotFromStart")
-                                ),
+                                withSpinner(plotOutput("plotFromStart"))
+                       ),
                        tabPanel("Par année",
-                                plotOutput("plotByYear")
+                                withSpinner(plotOutput("plotByYear"))
+                       ),
+                       tabPanel("Par mois",
+                                withSpinner(plotOutput("plotByMonth"))
+                       ),
+                       tabPanel("Ppar jour",
+                                withSpinner(plotOutput("plotByDay"))
                        )
                      )
                     ),
