@@ -84,6 +84,36 @@ updatePlotStats = function(input, output, id) {
       theme_classic()
   )
   
+
+
+  deb <- head(
+    selectedCap %>%
+      select("debit"),100)
+  
+  ts.deb <- ts(deb,frequency = 24)
+  ts.debSa <- diff(ts.deb)
+  ts.debSa <- diff(ts.debSa)
+  ar <- auto.arima(ts.debSa)
+  f <- forecast(ar,h=24)
+  
+  output$predictDebitByDay = renderPlot(
+    plot(f,xlab="Jours",ylab="Fréquences",main = "Prédiction du débit du capteur sélectionné en fonction du temps")
+  )
+
+  # tx <- head(
+  #   selectedCap %>%
+  #     select("taux"),100)
+  # 
+  # ts.tx <- ts(tx,frequency = 24)
+  # ts.txSa <- diff(ts.tx)
+  # ts.debSa <- diff(ts.txSa)
+  # ar <- auto.arima(ts.txSa)
+  # f <- forecast(ar,h=24)
+  # 
+  # output$predictTauxByDay = renderPlot(
+  #   plot(f,xlab="Jours",ylab="Fréquences",main = "Prédiction du taux du capteur sélectionné en fonction du temps")
+  # )
+  
   output$plotByDay = renderPlot(
     selectedCap %>% 
       mutate(heure = format(date, "%H"),

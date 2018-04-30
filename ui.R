@@ -93,15 +93,23 @@ dashboardPage(
                        )
                      )
                     ),
-            tabPanel("Prédictif", "predCap")
+            tabPanel("Prédictif",
+                     tabBox(
+                       title = "",
+                       height = "400px",
+                       width = 12,
+                       id = "statBox",
+                       tabPanel("Débit/Jours",
+                                withSpinner(plotOutput("predictDebitByDay"))
+                       ),
+                       tabPanel("Taux/Jours"
+                                #withSpinner(plotOutput("predictTauxByDay"))
+                       )
+                     )
+            )
           )
         )
-        
       )
     )
   )
 )
-
-
-
-
