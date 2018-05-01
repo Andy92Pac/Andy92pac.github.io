@@ -17,8 +17,6 @@ cap = mongo(collection = "capteurs", db = "trafic",
 tra = mongo(collection = "trafic", db = "trafic", 
             url = "mongodb://193.51.82.104:2343")
 
-<<<<<<< HEAD
-
 plotByDay = renderPlot(
   selectedCap %>% 
     mutate(heure = format(date, "%H"),
@@ -29,5 +27,3 @@ plotByDay = renderPlot(
     geom_line() +
     theme_classic()
 )
-=======
->>>>>>> eca898184517099666095100b42c2a1b6fbcb44a
