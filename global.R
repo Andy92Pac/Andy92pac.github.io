@@ -17,3 +17,13 @@ cap = mongo(collection = "capteurs", db = "trafic",
 tra = mongo(collection = "trafic", db = "trafic", 
             url = "mongodb://193.51.82.104:2343")
 
+plotByDay = renderPlot(
+  selectedCap %>% 
+    mutate(heure = format(date, "%H"),
+           jour = format(date, "%A")) %>%
+    group_by(heure, jour) %>%
+    summarise(moy = mean(tauxNum, na.rm = TRUE)) %>%
+    ggplot(aes(heure, moy, col = jour, group = jour)) +
+    geom_line() +
+    theme_classic()
+)
