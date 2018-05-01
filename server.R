@@ -139,6 +139,43 @@ if (!"debit" %in% colnames(selectedCap) | !"tauxNum" %in% colnames(selectedCap) 
 
 server <- function(input, output) { 
   
+  output$pres = renderUI(HTML('<hr>
+<p>title: &quot;Trafic mongo&quot;</p>
+                              <p id=author-ahamada-farid-mpondo-black-andy-narjes-nalouti-tinhinene-mahtal-">author: &quot;AHAMADA Farid, MPONDO BLACK Andy, Narjes NALOUTI &amp; Tinhinene MAHTAL&quot;</p>
+                              <ol>
+                              <li>Présentation des données</li>
+                              <li>Dashboard<ul>
+                              <li>2.1 Carte</li>
+                              <li>2.2 Localisation capteur sélectionné</li>
+                              <li>2.3 Informations capteur sélectionné</li>
+                              <li>2.4 Statistique descriptives (Plot)</li>
+                              <li>2.5 Série temporelle</li>
+                              </ul>
+                              </li>
+                              </ol>
+                              <hr>
+                              <h2 id="1-pr-sentation-des-donn-es">1. Présentation des données</h2>
+                              <p>Sur le réseau parisien, la mesure du trafic s’effectue majoritairement par le biais de boucles électromagnétiques implantés dans la chaussée.
+                              Deux types de données sont ainsi élaborés :
+                               le taux d’occupation, qui correspond au temps de présence de véhicules sur la boucle en pourcentage d’un intervalle de temps fixe (une heure pour les données fournies). Ainsi, 25% de taux d’occupation sur une heure signifie que des véhicules ont été présents sur la boucle pendant 15 minutes. Le taux fournit une information sur la congestion routière. L’implantation des boucles est pensée de manière à pouvoir déduire, d’une mesure ponctuelle, l’état du trafic sur un arc.
+                               le débit est le nombre de véhicules ayant passé le point de comptage pendant un intervalle de temps fixe (une heure pour les données fournies).
+                              Ainsi, l’observation couplée en un point du taux d’occupation et du débit permet de caractériser le trafic. Cela constitue l’un des fondements de l’ingénierie du trafic, et l’on nomme d’ailleurs cela le « diagramme fondamental ».
+                              Un débit peut correspondre à deux situations de trafic : fluide ou saturée, d’où la nécessité du taux d’occupation. A titre d’exemple : sur une heure, un débit de 100 véhicules par heure sur un axe habituellement très chargé peut se rencontrer de nuit (trafic fluide) ou bien en heure de pointe (trafic saturé).</p>
+                              <hr>
+                              <h2 id="2-dashboard">2. Dashboard</h2>
+                              <p>Ce dashboard permet de visualiser les données des capteurs de trafic disponibles sur le site d&#39;OpenData de Paris.</p>
+                              <p><strong>2.1 Carte</strong></p>
+                              <p>Il est composé d&#39;une carte de capteurs sur laquelle l&#39;ensemble des capteurs sont représentés.</p>
+                              <p><strong>2.2 Informations capteur sélectionné</strong></p>
+                              <p>Il est possible de cliquer sur ces derniers afin d’obtenir plus de détails.
+                              Ainsi, lors d’un clic sur un capteur, il sera possible d’obtenir l’adresse associée à celui-ci, mais également sa latitude et sa longitude.</p>
+                              <p><strong>2.3 Statistique descriptives (Plot)</strong></p>
+                              <p>En plus de cela, plusieurs graphiques s’afficheront.
+                              Ceux-ci permettent de visualiser graphiquement les taux d’occupation récoltés par le capteur sélectionné : depuis le début, par année, par mois et enfin par jour.</p>
+                              <p><strong>2.4 Série temporelle</strong></p>
+                              <p>Pour finir, le dashboard permet également, lorsque les données le permettent, de réaliser des prédictions du taux et du débit en fonction des données récoltées précédemment.</p>
+                              '))
+  
   setupMap(input, output)
   
 }

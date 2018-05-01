@@ -5,16 +5,14 @@ dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       menuItem(
+        "Présentation", 
+        tabName = "presentation", 
+        icon = icon("home")
+      ),
+      menuItem(
         "Carte", 
         tabName = "maps", 
         icon = icon("globe")
-      ),
-      menuItem(
-        "Analyse", 
-        tabName = "analyse", 
-        icon = icon("bar-chart"),
-        menuSubItem("Watersheds", tabName = "c_water", icon = icon("area-chart")),
-        menuSubItem("Population", tabName = "c_pop", icon = icon("area-chart"))
       )
     )
   ),
@@ -22,6 +20,12 @@ dashboardPage(
     useShinyalert(),
     
     tabItems(
+      
+      tabItem(
+        tabName = "presentation",
+        #includeMarkdown("README.md") 
+        htmlOutput("pres")
+      ),
       
       tabItem(
         tabName = "maps",

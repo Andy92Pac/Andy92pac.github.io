@@ -48,5 +48,3 @@ Ceux-ci permettent de visualiser graphiquement les taux d’occupation récolté
 __2.4 Série temporelle__
 
 Pour finir, le dashboard permet également, lorsque les données le permettent, de réaliser des prédictions du taux et du débit en fonction des données récoltées précédemment.
-
-***
