@@ -96,13 +96,29 @@ if (!"debit" %in% colnames(selectedCap) | !"tauxNum" %in% colnames(selectedCap) 
     shinyalert("Ce capteur comporte peu d'informations pour pouvoir faire une prédiction fiable, sélectionnez un autre capteur",type = "error")
   } else {
     ts.debit_pred <- ts(debit_pred,frequency = 24)
-    plot(ts.debit_pred)
     ts.debit_pred_Sa <- diff(ts.debit_pred)
-    ts.debit_pred_Sa <- diff(ts.debit_pred_Sa)
     ar <- auto.arima(ts.debit_pred_Sa)
     f <- forecast(ar,h=24)
     output$predictDebitByDay = renderPlot(
       plot(f,xlab="Jours",ylab="Fréquences",main = "Prédiction du débit du capteur sélectionné en fonction du temps")
+    )
+  }
+  
+  Tx_pred <- (head(selectedCap %>% select(taux),100))
+  
+  Tx_pred = unlist(Tx_pred)
+  Tx_pred = gsub(",",".",Tx_pred)
+  Tx_pred = as.numeric(Tx_pred)
+  Tx_na <- sum(is.na(Tx_pred))
+  if (Tx_na > 10){
+    shinyalert("Ce capteur comporte peu d'informations pour pouvoir faire une prédiction fiable, sélectionnez un autre capteur",type = "error")
+  } else {
+    ts.Tx_pred <- ts(Tx_pred, frequency = 24)
+    ts.Tx_pred_Sa <- diff(ts.Tx_pred)
+    Tx.ar <- auto.arima(ts.Tx_pred_Sa)
+    Tx.f <- forecast(Tx.ar,h=24)
+    output$predictTxByDay = renderPlot(
+      plot(Tx.f,xlab="Jours",ylab="Fréquences",main = "Prédiction du taux du capteur sélectionné en fonction du temps")
     )
   }
   

@@ -29,10 +29,3 @@ plotByDay = renderPlot(
     geom_line() +
     theme_classic()
 )
-k = tra$find(limit = 100)
-deb <- ts(k$debit)
-plot(deb)
-tmpserie.sanstend <- diff(deb)
-d = diff(tmpserie.sanstend) 
-
-plot(tmpserie.sanstend)
