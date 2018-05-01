@@ -87,12 +87,12 @@ if (!"debit" %in% colnames(selectedCap) | !"tauxNum" %in% colnames(selectedCap) 
       theme_classic()
   )
   
-  debit_pred <- (head(selectedCap %>% select(debit),100))
+  debit_pred <- (head(selectedCap %>% select(debit),150))
   debit_pred = unlist(debit_pred)
   debit_pred = gsub(",",".",debit_pred)
   debit_pred = as.numeric(debit_pred)
   deb_na <- sum(is.na(debit_pred))
-  if (deb_na > 10){
+  if (deb_na > 60){
     shinyalert("Ce capteur comporte peu d'informations pour pouvoir faire une prédiction fiable, sélectionnez un autre capteur",type = "error")
   } else {
     ts.debit_pred <- ts(debit_pred,frequency = 24)
@@ -104,13 +104,13 @@ if (!"debit" %in% colnames(selectedCap) | !"tauxNum" %in% colnames(selectedCap) 
     )
   }
   
-  Tx_pred <- (head(selectedCap %>% select(taux),100))
+  Tx_pred <- (head(selectedCap %>% select(taux),150))
   
   Tx_pred = unlist(Tx_pred)
   Tx_pred = gsub(",",".",Tx_pred)
   Tx_pred = as.numeric(Tx_pred)
   Tx_na <- sum(is.na(Tx_pred))
-  if (Tx_na > 10){
+  if (Tx_na > 60){
     shinyalert("Ce capteur comporte peu d'informations pour pouvoir faire une prédiction fiable, sélectionnez un autre capteur",type = "error")
   } else {
     ts.Tx_pred <- ts(Tx_pred, frequency = 24)
