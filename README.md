@@ -1,3 +1,38 @@
+---
+title: "Différenciation des précurseurs hématopoïétiques chez l'embryon"
+author: "AHAMADA Farid & MPONDO BLACK Andy"
+---
+
+
+1. Présentation des données
+2. Dashboard
+  + 2.1 Carte
+  + 2.2 Localisation capteur sélectionné
+  + 2.3 Informations capteur sélectionné
+  + 2.4 Statistique descriptives (Plot)
+  + 2.5 Série temporelle
+ 
+
+***
+
+
+## 1. Présentation des données
+
+***
+
+## 2. Dashboard
+
+__2.1 Localisation capteur sélectionné__
+
+__2.2 Informations capteur sélectionné__
+
+__2.3 Statistique descriptives (Plot)__
+
+__2.4 Série temporelle__
+
+***
+
+
 # TraficMongo
 
 ## Les données
