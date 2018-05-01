@@ -57,7 +57,10 @@ setupMap = function(input, output) {
 
 updatePlotStats = function(input, output, id) {
   selectedCap <<- tra$find(query = paste0(' { "id": ', as.numeric(id), '}'))
-  
+
+if (!"debit" %in% colnames(selectedCap) | !"tauxNum" %in% colnames(selectedCap) | !"taux" %in% colnames(selectedCap)){
+    shinyalert("Ce capteur comporte peu d'informations pour être analysé, veuillez en sélectionner un autre")
+}else {
   output$plotFromStart = renderPlot(
     ggplot(selectedCap, aes(date, tauxNum)) +
       geom_line() +
@@ -84,35 +87,24 @@ updatePlotStats = function(input, output, id) {
       theme_classic()
   )
   
-
-
-  deb <- head(
-    selectedCap %>%
-      select("debit"),100)
-  
-  ts.deb <- ts(deb,frequency = 24)
-  ts.debSa <- diff(ts.deb)
-  ts.debSa <- diff(ts.debSa)
-  ar <- auto.arima(ts.debSa)
-  f <- forecast(ar,h=24)
-  
-  output$predictDebitByDay = renderPlot(
-    plot(f,xlab="Jours",ylab="Fréquences",main = "Prédiction du débit du capteur sélectionné en fonction du temps")
-  )
-
-  # tx <- head(
-  #   selectedCap %>%
-  #     select("taux"),100)
-  # 
-  # ts.tx <- ts(tx,frequency = 24)
-  # ts.txSa <- diff(ts.tx)
-  # ts.debSa <- diff(ts.txSa)
-  # ar <- auto.arima(ts.txSa)
-  # f <- forecast(ar,h=24)
-  # 
-  # output$predictTauxByDay = renderPlot(
-  #   plot(f,xlab="Jours",ylab="Fréquences",main = "Prédiction du taux du capteur sélectionné en fonction du temps")
-  # )
+  debit_pred <- (head(selectedCap %>% select(debit),100))
+  debit_pred = unlist(debit_pred)
+  debit_pred = gsub(",",".",debit_pred)
+  debit_pred = as.numeric(debit_pred)
+  deb_na <- sum(is.na(debit_pred))
+  if (deb_na > 10){
+    shinyalert("Ce capteur comporte peu d'informations pour pouvoir faire une prédiction fiable, sélectionnez un autre capteur",type = "error")
+  } else {
+    ts.debit_pred <- ts(debit_pred,frequency = 24)
+    plot(ts.debit_pred)
+    ts.debit_pred_Sa <- diff(ts.debit_pred)
+    ts.debit_pred_Sa <- diff(ts.debit_pred_Sa)
+    ar <- auto.arima(ts.debit_pred_Sa)
+    f <- forecast(ar,h=24)
+    output$predictDebitByDay = renderPlot(
+      plot(f,xlab="Jours",ylab="Fréquences",main = "Prédiction du débit du capteur sélectionné en fonction du temps")
+    )
+  }
   
   output$plotByDay = renderPlot(
     selectedCap %>% 
@@ -124,8 +116,10 @@ updatePlotStats = function(input, output, id) {
       geom_line() +
       theme_classic()
   )
+}
+  }
   
-} 
+   
 
 server <- function(input, output) { 
   

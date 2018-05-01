@@ -19,6 +19,7 @@ dashboardPage(
     )
   ),
   dashboardBody(
+    useShinyalert(),
     
     tabItems(
       
@@ -101,9 +102,6 @@ dashboardPage(
                        id = "statBox",
                        tabPanel("Débit/Jours",
                                 withSpinner(plotOutput("predictDebitByDay"))
-                       ),
-                       tabPanel("Taux/Jours"
-                                #withSpinner(plotOutput("predictTauxByDay"))
                        )
                      )
             )
